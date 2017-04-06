@@ -1,19 +1,20 @@
-#ifndef ESCALONADOR
-#define ESCALONADOR
+#ifndef ESCALONADOR_H
+#define ESCALONADOR_H
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <iomanip>
-#include <fsream>
+#include <fstream>
 
 
 typedef struct{
 
 	int pid = 0;
 	int duracao_do_processo = 0;
-	int tempo_de_execucao = 0;
+	int tempo_de_execucao = 0; // contador
 	int tempo_de_chegada = 0;
+
 
 }Processo;
 
