@@ -1,5 +1,5 @@
 all:
 
-	g++  *.cpp -o main
+	g++ -std=c++11 *.cpp -o main
 
 	

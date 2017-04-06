@@ -14,6 +14,7 @@ typedef struct{
 	int duracao_do_processo = 0;
 	int tempo_de_execucao = 0; // contador
 	int tempo_de_chegada = 0;
+	int tempo_restante;
 
 
 }Processo;
