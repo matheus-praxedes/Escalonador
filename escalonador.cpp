@@ -159,9 +159,11 @@ void RR(const Processo *processos, int numero_de_processos){
 	int   retorno                 = numero_de_processos;
 	int   ciclo                   = 0;
 	int   quantum                 = 2;
+	bool  back_to_ready 		  = false;
 
 	std::vector<Processo> prontos; // fila de prontos
 	std::vector<Processo> novos; // cópia do array de processos	
+	Processo first;
 
 	for (int i= 0; i < numero_de_processos; i++){
 
@@ -181,41 +183,35 @@ void RR(const Processo *processos, int numero_de_processos){
 			}	
 		}	
 
-		std::cout<<" \n\n Prontos ";
-		for (int i= 0; i < prontos.size(); i++){
-
-			std::cout<<prontos[i].pid<< " | ";
-			
+		if(back_to_ready){
+			prontos.push_back(first);
+			back_to_ready = false;
 		}
-		//std::cout<<"\nciclo "<<ciclo;*/
+
+		//for (int i= 0; i < prontos.size(); i++) std::cout << prontos[i].pid << " | ";
+		//std::cout << std::endl;
 
 
-		Processo first = prontos[0];
+		first = prontos[0];
 		prontos.erase(prontos.begin());
 		
-		tempo_de_espera   += ciclo - first.tempo_de_chegada;  
 		
-		if(first.tempo_restante == first.duracao_do_processo){
-
-			std::cout<<"\n\ntr "<<first.tempo_restante;
-			std::cout<<"\ntd "<<first.duracao_do_processo;
-			
-			std::cout<<"\nciclo "<<ciclo;
-			std::cout<<"\ntch "<<first.tempo_de_chegada;
+		if(first.tempo_restante == first.duracao_do_processo)
 			tempo_de_resposta += ciclo - first.tempo_de_chegada;
 
-		}
 		ciclo += quantum;
 		first.tempo_restante -= quantum;
+		tempo_de_espera   += quantum * prontos.size();  
 		
 
 		if(first.tempo_restante > 0){
-			
-			prontos.push_back(first);
+			back_to_ready = true;
 		}
 		if(first.tempo_restante <= 0){
 			retorno--;
 			ciclo += first.tempo_restante;
+
+			tempo_de_espera += (first.tempo_restante * prontos.size());	
 			tempo_de_retorno  += ciclo - first.tempo_de_chegada;
 		}	
 
@@ -226,5 +222,5 @@ void RR(const Processo *processos, int numero_de_processos){
 	tempo_medio_de_retorno = tempo_de_retorno / float(numero_de_processos);
 	tempo_medio_de_espera = tempo_de_espera / float(numero_de_processos);
 
-	std::cout<<"RR" << " " << tempo_de_retorno << " " << tempo_de_resposta << " " << tempo_de_espera <<std::endl;
+	std::cout << "RR" << " "  << tempo_medio_de_retorno << " " << tempo_medio_de_resposta << " " << tempo_medio_de_espera << std::endl;
 }

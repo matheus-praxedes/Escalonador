@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <fstream>
-
+#include <deque>
 
 typedef struct{
 
@@ -15,6 +15,7 @@ typedef struct{
 	int tempo_de_execucao = 0; // contador
 	int tempo_de_chegada = 0;
 	int tempo_restante;
+	int prioridade = 0;
 
 
 }Processo;
