@@ -12,7 +12,7 @@ void FCFS(const Processo *processos, int numero_de_processos){
 	int   ciclo                   = 0;
   
 	std::vector<Processo> prontos; // fila de prontos
-	std::vector<Processo> novos; // cópia do array de processos	
+	std::vector<Processo> novos; // fila de novos	
 
 	for (int i= 0; i < numero_de_processos; i++){
 
@@ -31,25 +31,7 @@ void FCFS(const Processo *processos, int numero_de_processos){
 				novos.erase (novos.begin()+i);
 				i--;
 			}
-			// else{
-			// 	break;
-			// }
 		}
-
-		/*std::cout<<" \n Prontos ";
-		for (int i= 0; i < prontos.size(); i++){
-
-			std::cout<<prontos[i].duracao_do_processo<< " | ";
-			
-		}
-
-		std::cout<<"\n Novos ";
-		for (int i= 0; i < novos.size(); i++){
-
-			std::cout<<novos[i].duracao_do_processo<< " | ";
-			
-		}*/
-		
 
 		Processo first = prontos[0];
 		retorno--;
@@ -60,11 +42,8 @@ void FCFS(const Processo *processos, int numero_de_processos){
 		tempo_de_resposta += ciclo - first.tempo_de_chegada; 
 		
 		ciclo += first.duracao_do_processo;
-		//std::cout<<"ciclo:"<<ciclo<<std::endl;
-
+	
 		tempo_de_retorno  += ciclo - first.tempo_de_chegada; 
-
-		
 	}
 
 
@@ -97,7 +76,7 @@ void SJF(const Processo *processos, int numero_de_processos){
 	int   ciclo                   = 0;
 	 
 	std::vector<Processo> prontos; // fila de prontos
-	std::vector<Processo> novos; // cópia do array de processos	
+	std::vector<Processo> novos; // fila de novos	
 
 	for (int i= 0; i < numero_de_processos; i++){
 
@@ -105,11 +84,8 @@ void SJF(const Processo *processos, int numero_de_processos){
 				
 	}		
 	
-	
 	while(retorno != 0){ 
 
-		
-		
 		for (int i = 0; i < novos.size(); i++){
 
 			if( novos[i].tempo_de_chegada <= ciclo){
@@ -134,7 +110,6 @@ void SJF(const Processo *processos, int numero_de_processos){
 		ciclo += first.duracao_do_processo;
 		tempo_de_retorno  += ciclo - first.tempo_de_chegada; 
 
-		
 	}
 
 	tempo_medio_de_retorno = tempo_de_retorno / float(numero_de_processos);
@@ -145,7 +120,6 @@ void SJF(const Processo *processos, int numero_de_processos){
 	std::cout<<"SJF" << " " << tempo_medio_de_retorno << " " << tempo_medio_de_resposta << " " << tempo_medio_de_espera <<std::endl;
 
 }
-
 
 void RR(const Processo *processos, int numero_de_processos){
 
@@ -162,7 +136,7 @@ void RR(const Processo *processos, int numero_de_processos){
 	bool  back_to_ready 		  = false;
 
 	std::vector<Processo> prontos; // fila de prontos
-	std::vector<Processo> novos; // cópia do array de processos	
+	std::vector<Processo> novos; // fila de novos	
 	Processo first;
 
 	for (int i= 0; i < numero_de_processos; i++){
@@ -188,13 +162,8 @@ void RR(const Processo *processos, int numero_de_processos){
 			back_to_ready = false;
 		}
 
-		//for (int i= 0; i < prontos.size(); i++) std::cout << prontos[i].pid << " | ";
-		//std::cout << std::endl;
-
-
 		first = prontos[0];
 		prontos.erase(prontos.begin());
-		
 		
 		if(first.tempo_restante == first.duracao_do_processo)
 			tempo_de_resposta += ciclo - first.tempo_de_chegada;

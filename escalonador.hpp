@@ -12,12 +12,10 @@ typedef struct{
 
 	int pid = 0;
 	int duracao_do_processo = 0;
-	int tempo_de_execucao = 0; // contador
+	int tempo_de_execucao = 0;
 	int tempo_de_chegada = 0;
 	int tempo_restante;
-	int prioridade = 0;
-
-
+	
 }Processo;
 
 void FCFS(const Processo *processos, int numero_de_processos);
