@@ -1,3 +1,16 @@
+/******************************************
+*Universidade Federal da Paraíba - UFPB
+*Centro de Informática - CI
+*
+*Sistemas Operacionais 1 - 2016.2
+*
+*Aluno: Matheus Maranhão Rêgo Praxedes
+*Matrícula: 11403744
+*
+*Trabalho 1
+*Data de entrega: 13/04/2017
+*******************************************/
+
 #include "escalonador.hpp"
 
 void FCFS(const Processo *processos, int numero_de_processos){
@@ -57,7 +70,7 @@ void FCFS(const Processo *processos, int numero_de_processos){
 }
 
 
-bool comparar(const Processo& p1, const Processo& p2){
+bool comparar1(const Processo& p1, const Processo& p2){
 
 	return (p1.duracao_do_processo <= p2.duracao_do_processo);
 
@@ -97,7 +110,7 @@ void SJF(const Processo *processos, int numero_de_processos){
 			
 		}
 
-		std::sort(prontos.begin(),prontos.end(),comparar);	
+		std::sort(prontos.begin(),prontos.end(),comparar1);	
 
 		Processo first = prontos[0];
 		retorno--;
@@ -121,6 +134,12 @@ void SJF(const Processo *processos, int numero_de_processos){
 
 }
 
+bool comparar2(const Processo& p1, const Processo& p2){
+
+	return (p1.tempo_de_chegada < p2.tempo_de_chegada);
+
+}
+
 void RR(const Processo *processos, int numero_de_processos){
 
 
@@ -139,11 +158,23 @@ void RR(const Processo *processos, int numero_de_processos){
 	std::vector<Processo> novos; // fila de novos	
 	Processo first;
 
+
 	for (int i= 0; i < numero_de_processos; i++){
 
 		novos.push_back(processos[i]);
-				
-	}		
+		
+	}	
+
+	//std::sort(novos.begin(),novos.end(),comparar2);
+	/*for (int i= 0; i < numero_de_processos; i++){
+
+		std::cout << "Novos " << i << " " << novos[i].pid
+		          << " | " << novos[i].tempo_de_chegada
+	              << " | " << novos[i].duracao_do_processo << std::endl;
+
+	}*/
+	//std::sort(novos.begin(),novos.end(),comparar2);
+	
 	while(retorno != 0){ 	
 		
 		for (int i = 0; i < novos.size(); i++){
@@ -182,7 +213,7 @@ void RR(const Processo *processos, int numero_de_processos){
 			std::cout<<novos[i].duracao_do_processo<< " | ";
 			
 		}*/
-		
+
 		first = prontos[0];
 		prontos.erase(prontos.begin());
 		
