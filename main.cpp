@@ -43,16 +43,8 @@ int main (int argc, char* argv[]){
 		}	
 	}
 
-	/*for (int i= 0; i < numero_de_processos; i++){
-
-		std::cout << "Processos " << i << " " << processos[i].pid
-		          << " | " << processos[i].tempo_de_chegada
-	              << " | " << processos[i].duracao_do_processo << std::endl;
-
-	}*/
-
-
 	std::stable_sort(processos, processos + numero_de_processos, comparar2);
+	//std::sort(processos, processos + numero_de_processos, comparar2);
 
 	FCFS(processos, numero_de_processos);
 	SJF(processos, numero_de_processos);
