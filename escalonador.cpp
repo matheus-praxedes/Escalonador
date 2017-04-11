@@ -148,8 +148,15 @@ void RR(const Processo *processos, int numero_de_processos){
 		
 		for (int i = 0; i < novos.size(); i++){
 
-			if( novos[i].tempo_de_chegada <= ciclo){
+			if( novos[i].tempo_de_chegada == ciclo){
 				
+				prontos.push_back(novos[i]);
+				novos.erase (novos.begin()+i);
+				i--;
+				
+			}else if( novos[i].tempo_de_chegada < ciclo){
+				
+				tempo_de_espera += ciclo - novos[i].tempo_de_chegada;
 				prontos.push_back(novos[i]);
 				novos.erase (novos.begin()+i);
 				i--;
@@ -162,6 +169,20 @@ void RR(const Processo *processos, int numero_de_processos){
 			back_to_ready = false;
 		}
 
+		/*std::cout<<" \n Prontos ";
+		for (int i= 0; i < prontos.size(); i++){
+ 
+			std::cout<<prontos[i].duracao_do_processo<< " | ";
+			
+ 		}
+
+		std::cout<<"\n Novos ";
+		for (int i= 0; i < novos.size(); i++){
+
+			std::cout<<novos[i].duracao_do_processo<< " | ";
+			
+		}*/
+		
 		first = prontos[0];
 		prontos.erase(prontos.begin());
 		
@@ -172,19 +193,26 @@ void RR(const Processo *processos, int numero_de_processos){
 		first.tempo_restante -= quantum;
 		tempo_de_espera   += quantum * prontos.size();  
 		
-
+		/*std::cout << quantum << " * "
+		 	       << prontos.size()
+		 	       << " + ";
+		*/
 		if(first.tempo_restante > 0){
 			back_to_ready = true;
 		}
 		if(first.tempo_restante <= 0){
 			retorno--;
+			
 			ciclo += first.tempo_restante;
-
-			tempo_de_espera += (first.tempo_restante * prontos.size());	
+			tempo_de_espera += (first.tempo_restante * int(prontos.size()));
 			tempo_de_retorno  += ciclo - first.tempo_de_chegada;
 		}	
 
-		 
+		/*std::cout << first.tempo_restante << " * "
+		 	       << prontos.size()
+		 	       << " = "
+		 	       << quantum * prontos.size() + first.tempo_restante *int(prontos.size()) << std::endl;
+		*/
 	}	
     
 	tempo_medio_de_resposta = tempo_de_resposta / float(numero_de_processos);
